@@ -98,7 +98,24 @@ set(CloudJ_Fortran_FLAGS_DEBUG_GNU
    CACHE STRING "Cloud-J compiler flags for build type debug with GNU compilers"
 )
 
-set(CLOUDJ_SUPPORTED_COMPILER_IDS "Intel" "GNU")
+set(CloudJ_Fortran_FLAGS_LLVMFlang
+   -cpp -w -fconvert=big-endian -g
+   CACHE STRING "Cloud-J compiler flags for all build types with LLVM Flang compilers"
+)
+set(CloudJ_Fortran_FLAGS_RELEASE_LLVMFlang
+   -O3
+   CACHE STRING "Cloud-J compiler flags for build type release with LLVM Flang compilers"
+)
+set(CloudJ_Fortran_FLAGS_RELWITHDEBINFO_LLVMFlang
+   -O3
+   CACHE STRING "Cloud-J compiler flags for build type relwithdebinfo with LLVM Flang compilers"
+)
+set(CloudJ_Fortran_FLAGS_DEBUG_LLVMFlang
+   -g -O0 -DDEBUG
+   CACHE STRING "Cloud-J compiler flags for build type debug with LLVM Flang compilers"
+)
+
+set(CLOUDJ_SUPPORTED_COMPILER_IDS "Intel" "GNU" "LLVMFlang")
 if(NOT CMAKE_Fortran_COMPILER_ID IN_LIST CLOUDJ_SUPPORTED_COMPILER_IDS)
    message(FATAL_ERROR "Cloud-J does not support ${CMAKE_Fortran_COMPILER_ID} compilers")
 endif()
@@ -119,6 +136,12 @@ target_compile_options(CloudJBuildProperties
       $<$<CONFIG:Debug>:${CloudJ_Fortran_FLAGS_DEBUG_GNU}>
       $<$<CONFIG:RelWithDebInfo>:${CloudJ_Fortran_FLAGS_RELWITHDEBINFO_GNU}>
       $<$<CONFIG:Release>:${CloudJ_Fortran_FLAGS_RELEASE_GNU}>
+   >
+   $<$<STREQUAL:${CMAKE_Fortran_COMPILER_ID},LLVMFlang>:
+      ${CloudJ_Fortran_FLAGS_LLVMFlang}
+      $<$<CONFIG:Debug>:${CloudJ_Fortran_FLAGS_DEBUG_LLVMFlang}>
+      $<$<CONFIG:RelWithDebInfo>:${CloudJ_Fortran_FLAGS_RELWITHDEBINFO_LLVMFlang}>
+      $<$<CONFIG:Release>:${CloudJ_Fortran_FLAGS_RELEASE_LLVMFlang}>
    >
 )
 

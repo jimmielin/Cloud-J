@@ -358,7 +358,8 @@
          do IW=1, NSSS
             FWSUM= FWSUM + FW(IW)
          enddo
-         if (AMIROOT) write(6,*) 'total Solar flux=', FWSUM
+         ! Explicit formats (vs. list-directed) keep output identical across compilers
+         if (AMIROOT) write(6,'(a,f21.13,a)') ' total Solar flux=', FWSUM, '     '
 
       read (NUN,'(a6,1x,a16,1x,a120)',err=4) TIT_J1S,TIT_J1L,TIT_J1N
          if (AMIROOT) write(6,'(1x,a6,1x,a16,a8,a)') trim(TIT_J1S),trim(TIT_J1L), &
@@ -835,7 +836,7 @@
       open (NUN,FILE=NAMFIL,status='old',form='formatted')
 
       read (NUN,'(a78)') TITLE0
-      if (AMIROOT) write(6,*) 'UMichigan Aerosols ', adjustl(trim(TITLE0))
+      if (AMIROOT) write(6,'(a,a)') ' UMichigan Aerosols ', adjustl(trim(TITLE0))
       read(NUN,'(5x,10f5.0)') WMM
       if (AMIROOT) write(6,'(a,10f7.1)') ' UMIchigan aerosol wavelengths:',WMM
 

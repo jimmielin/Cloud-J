@@ -287,7 +287,7 @@
             CLDCOR,NCLDF,GFNR,GCMX,GNR,GBOT,GTOP,GLVL,NRG,NICA,  WCOL,OCOL)
 
          if(LPRTJ0) then
-            write(6,*) ' cloud-J internal print:  #ICAs = ',NICA
+            write(6,'(a,i12)') '  cloud-J internal print:  #ICAs = ',NICA
          endif
 
 !-----------------------------------------------------------------------
